@@ -1,0 +1,45 @@
+.login-container{
+    padding-top: 80px;
+    display: flex;
+    flex-direction: column;
+    .title{
+        text-align: center;
+        font-size: 1.7rem;
+        font-weight: 600;
+    }
+    .text{
+        font-weight: 600;
+        font-size: 1rem;
+        padding-bottom: 3px;
+    }
+    .text-input{
+        margin-bottom: 8px;
+        padding-left: 5px;
+        height: 40px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        border: none;
+        border-radius: 3px;
+        outline: none;
+        &:hover{
+            background-color: rgba(237, 240, 237, 0.933);
+            transition: 0.3s;
+        }
+    }
+    .btn-login{
+        margin-top: 15px;
+        padding: 10px;
+        outline: none;
+        border-radius: 3px;
+        border: none
+        
+    }
+    .go-back{
+        margin-top: 20px;
+        text-align: center;
+        &:hover{
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    }
+}
