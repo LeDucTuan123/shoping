@@ -1,12 +1,13 @@
 import { Container, Row, Col, Table, Button } from "react-bootstrap";
 import { useThemeHook } from "../GlobalCombonents/ThemeProvider";
 import { useCart } from "react-use-cart";
-import { BsCartCheck, BsCartX } from "react-icons/bs";
+import { BsCartX } from "react-icons/bs";
+import { Link } from "react-router-dom";
 const Cart = () => {
   const [theme] = useThemeHook();
   const {
     isEmpty,
-    totalUniqueItems,
+    // totalUniqueItems,
     items,
     cartTotal,
     updateItemQuantity,
@@ -31,7 +32,7 @@ const Cart = () => {
             striped
             bordered
             hover
-            variant={theme ? "dark" : "light-primary"}
+            variant={theme ? "dark" : "light"}
             className="mb-5"
           >
             <tbody>
@@ -40,25 +41,27 @@ const Cart = () => {
                   <tr key={`item-cart-${index}`}>
                     <td>{index + 1}</td>
                     <td>
-                      <div
-                        style={{
-                          backgroundColor: "white",
-                          height: "8rem",
-                          overflow: "hidden",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          marginBottom: "inherit",
-                        }}
-                      >
-                        <div style={{ padding: ".5rem" }}>
-                          <img
-                            src={item.image}
-                            style={{ width: "4rem" }}
-                            alt={item.title}
-                          />
+                      <Link to={`/products/${item.id}`}>
+                        <div
+                          style={{
+                            backgroundColor: "white",
+                            height: "8rem",
+                            overflow: "hidden",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            marginBottom: "inherit",
+                          }}
+                        >
+                          <div style={{ padding: ".5rem" }}>
+                            <img
+                              src={item.image}
+                              style={{ width: "4rem" }}
+                              alt={item.title}
+                            />
+                          </div>
                         </div>
-                      </div>
+                      </Link>
                     </td>
                     <td>
                       <h6
@@ -72,7 +75,7 @@ const Cart = () => {
                         {item.title}
                       </h6>
                     </td>
-                    <td>{item.price}</td>
+                    <td>₫{item.price}</td>
                     <td>SL: {item.quantity}</td>
                     <td>
                       <button

@@ -2,32 +2,30 @@ import { Container, Row, Col, InputGroup, FormControl } from "react-bootstrap";
 import { useThemeHook } from "../GlobalCombonents/ThemeProvider";
 import { BiSearch } from "react-icons/bi";
 import { useEffect, useState } from "react";
-import ProductCard from "../Components/ProductCard";
+import ProductCard from "../Components/DetailComponent/ProductCard";
 import { fetchAllData } from "../Services/UserServies";
 import _, { debounce } from "lodash";
+import ModalAddNew from "../Components/Modal/ModalAddNew";
 
 const Home = () => {
   const [theme] = useThemeHook();
-  //   const [searchInput, setSearchInput] = useState("");
   const [productData, setProductData] = useState([]);
+  const [isShowModalAddNew, setIsShowModalAddNew] = useState(false);
 
   const getResponse = async () => {
     let res = await fetchAllData();
-
-    if (res) {
-      setProductData(res);
-    }
+    setProductData(res);
   };
   useEffect(() => {
     getResponse();
   }, []);
-
   const handleSearchData = debounce((e) => {
     let term = e.target.value;
-    if (term) {
+    let text = term.trim();
+    if (text) {
       let cloneProductData = _.cloneDeep(productData);
       cloneProductData = cloneProductData.filter((item) =>
-        item.title.includes(term)
+        item.title.includes(text)
       );
       setProductData(cloneProductData);
     } else {
@@ -35,6 +33,16 @@ const Home = () => {
     }
   }, 1000);
 
+  const addNewProducts = () => {
+    setIsShowModalAddNew(true);
+  };
+  const handleCloseModal = () => {
+    setIsShowModalAddNew(false);
+  };
+
+  const handleAddProducts = (user) => {
+    setProductData([user, ...productData]);
+  };
   return (
     <>
       <Container className="py-4">
@@ -75,6 +83,9 @@ const Home = () => {
                 }
               /> */}
             </InputGroup>
+            <button className="btn btn-warning px-3 " onClick={addNewProducts}>
+              add Product
+            </button>
           </Col>
           <hr />
         </Row>
@@ -86,6 +97,11 @@ const Home = () => {
               </Col>
             );
           })}
+          <ModalAddNew
+            show={isShowModalAddNew}
+            onHandleCloseModal={handleCloseModal}
+            onHandleAddProduct={handleAddProducts}
+          />
         </Row>
       </Container>
     </>

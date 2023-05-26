@@ -12,12 +12,12 @@ import { NavDropdown } from "react-bootstrap";
 const Header = () => {
   const { theme, setThemeMode } = useContext(ThemeContext);
   const [darkMode, setDarkMode] = useState(theme);
+  const { isEmpty, totalItems } = useCart();
 
+  // console.log(products.productData);
   useEffect(() => {
     setThemeMode(darkMode);
-  }, [darkMode]);
-
-  const { isEmpty, totalItems } = useCart();
+  }, [darkMode, setThemeMode]);
 
   return (
     <>
@@ -77,7 +77,7 @@ const Header = () => {
                     {totalItems}
                   </span>
                 )}
-                <span
+                {/* <span
                   style={{
                     marginLeft: !isEmpty ? "-13px" : 0,
                     display: "flex",
@@ -85,17 +85,15 @@ const Header = () => {
                   }}
                 >
                   cart
-                </span>
+                </span> */}
               </Link>
               <NavDropdown title="Setting" className="mx-2">
-                <NavDropdown.Item href="#action/3.1">
+                <NavDropdown.Item>
                   <Link to="/login" style={{ textDecoration: "none" }}>
                     Login
                   </Link>
                 </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">
-                  Another action
-                </NavDropdown.Item>
+                <NavDropdown.Item>User</NavDropdown.Item>
               </NavDropdown>
             </Nav>
           </Navbar.Collapse>
