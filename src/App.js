@@ -23,14 +23,16 @@ function App() {
           className={theme ? "bg-url-dark" : "bg-url-light"}
           style={{ height: "100vh", overflowY: "auto" }}
         >
-          {token && <Header />}
+          {/* {token && <Header />} */}
+          <Header />
 
           <Routes>
             <Route
               path="/"
-              element={
-                token ? <Home /> : <Login token={token} setToken={setToken} />
-              }
+              // element={
+              //   token ? <Home /> : <Login token={token} setToken={setToken} />
+              // }
+              element={ <Home />}
             />
             <Route path="/cart" element={<Cart />} />
             <Route path="/login" element={<Login />} />
