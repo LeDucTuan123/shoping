@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/alt-text */
-import { memo } from "react";
+import { memo, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { FetchDetailData } from "../../Services/UserServies";
 import { Col, Container, Row } from "react-bootstrap";
@@ -13,12 +13,28 @@ const cx = classNames.bind(style);
 
 const DetailComponent = (props) => {
   let { id } = useParams();
-  const { detailData: data } = FetchDetailData(`/products/${id}`);
-  let discount = data.price - (data.price * 30) / 100;
-  //   let dataRate = data.rating.rate;
-  //   let dataCount = data.rating.count;
-  const { addItem } = useCart();
+  // const { detailData: data } = FetchDetailData(`/products/${id}`);
 
+  const [data, setData] = useState({});
+  const [loading, setLoading] = useState(false);
+  let Response = FetchDetailData(id); //fetch data api
+
+  const response = async () => {
+    let res = await Response;
+    setTimeout(() => {
+      if (res) {
+        setData(res);
+        setLoading(true);
+      }
+    }, 2000);
+  };
+  useEffect(() => {
+    response();
+  }, []);
+
+  let discount = data.price - (data.price * 30) / 100;
+  //them vao gio hang`
+  const { addItem } = useCart();
   const addToCart = () => {
     addItem(data);
   };
@@ -26,69 +42,78 @@ const DetailComponent = (props) => {
     <>
       <Container>
         <div className={cx(" py-5 mt-4")}>
-          <div className="">
-            <Row className={cx("bg-light-2", "p-2")}>
-              <Col sm="5">
-                <div className={cx("img")}>
-                  <img src={data.image} />
-                </div>
-              </Col>
-              <Col sm="7">
-                <div>
-                  <div className={cx("title")}>{data.title}</div>
-                  <div className="flex flex-column">
-                    <div className={cx("flex flex-column", "block-price")}>
-                      <span className={cx("discount")}>₫{discount}</span>
-                      <span className={cx("price")}>₫{data.price}</span>
-                      <div className="mt-2">
-                        <label>Đánh giá: </label>
-                        <span>
-                          {/* {dataRate} */}
-                          <VscStarFull
-                            size="1.2rem"
-                            style={{
-                              marginTop: "-5px",
-                              color: "red",
-                            }}
-                          />{" "}
-                        </span>
-                      </div>
-                    </div>
+          <div className={cx("bg-light-2", "p-2")}>
+            {loading ? (
+              <Row >
+                <Col sm="5">
+                  <div className={cx("img")}>
+                    <img src={data.image} />
                   </div>
-                  <div className={cx("block-text")}>
-                    <div className={cx("flex flex-column")}>
-                      <div className={cx("row ", "text")}>
-                        <div className="col-sm-2">
-                          <label>
-                            <b>Miêu tả sản phẩm :</b>{" "}
-                          </label>
+                </Col>
+                <Col sm="7">
+                  <div>
+                    <div className={cx("title")}>{data.title}</div>
+                    <div className="flex flex-column">
+                      <div className={cx("flex flex-column", "block-price")}>
+                        <div>
+                          <span className={cx("discount")}>${discount}</span>
+                          <span className={cx("price")}>${data.price}</span>
+                          
                         </div>
-                        <div className="col-sm-10">{data.description}</div>
-                        <div className="mt-4">
-                          <label className="col-sm-2">
-                            <b>loại :</b>
-                          </label>
-                          <span>{data.category}</span>
-                        </div>
-                        <div className="mt-4">
-                          <label className="col-sm-2">Đã bán : </label>
-                          {/* <span>{dataCount}</span> */}
-                        </div>
-                        <div className="mt-4 ">
-                          <button
-                            className={cx("btn-add-cart")}
-                            onClick={() => addToCart()}
-                          >
-                            <BiCart size="1.6rem" className="mx-2" />
-                            Thêm vào giỏ hàng
-                          </button>
+                        <div className="mt-2">
+                          <label>Đánh giá: </label>
+                          <span className="m-2">
+                            {data.rating.rate}
+                            <VscStarFull
+                              size="1.2rem"
+                              style={{
+                                marginTop: "-5px",
+                                color: "red",
+                              }}
+                            />{" "}
+                          </span>
                         </div>
                       </div>
                     </div>
+                    <div className={cx("block-text")}>
+                      <div className={cx("flex flex-column")}>
+                        <div className={cx("row ", "text")}>
+                          <div className="col-sm-2">
+                            <label>
+                              <b>Miêu tả sản phẩm :</b>{" "}
+                            </label>
+                          </div>
+                          <div className="col-sm-10">{data.description}</div>
+                          <div className="mt-4">
+                            <label className="col-sm-2">
+                              <b>loại :</b>
+                            </label>
+                            <span>{data.category}</span>
+                          </div>
+                          <div className="mt-4">
+                            <label className="col-sm-2">Đã bán : </label>
+                            <span>{data.rating.count} cái</span>
+                          </div>
+                          <div className="mt-4 ">
+                            <button
+                              className={cx("btn-add-cart")}
+                              onClick={() => addToCart()}
+                            >
+                              <BiCart size="1.6rem" className="mx-2" />
+                              Thêm vào giỏ hàng
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </Col>
-            </Row>
+                </Col>
+              </Row>
+            ) : (
+              <span className="py-5 mt-4 justify-content-center">
+                <h1>Loading...</h1>
+              </span>
+            )}
           </div>
         </div>
       </Container>

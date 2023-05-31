@@ -10,15 +10,21 @@ import ModalAddNew from "../Components/Modal/ModalAddNew";
 const Home = () => {
   const [theme] = useThemeHook();
   const [productData, setProductData] = useState([]);
+  const [filter, setFilter] = useState(productData)
   const [isShowModalAddNew, setIsShowModalAddNew] = useState(false);
 
+  
   const getResponse = async () => {
     let res = await fetchAllData();
-    setProductData(res);
+    if(res){
+      setProductData(res)
+      setFilter(res)
+    }
   };
   useEffect(() => {
     getResponse();
   }, []);
+  
   const handleSearchData = debounce((e) => {
     let term = e.target.value;
     let text = term.trim();
@@ -43,6 +49,15 @@ const Home = () => {
   const handleAddProducts = (user) => {
     setProductData([user, ...productData]);
   };
+  
+  const filterProducts = (text) => {
+    const update = productData.filter(item => item.category === text)
+    setProductData(update)
+    if(!productData){
+      setProductData(filter)
+    }
+  }
+  
   return (
     <>
       <Container className="py-4">
@@ -89,6 +104,13 @@ const Home = () => {
           </Col>
           <hr />
         </Row>
+        <div className="bg-light p-2 col-12 m-1 d-flex align-items-center justify-content-center ">
+        <input type="button" value="All" className="btn btn-light" onClick={() => setProductData(filter)} />
+         <input type="button" value="men's clothing" className="btn btn-light" onClick={() => filterProducts("men's clothing")} />
+          <input type="button" value="jewelery" className="btn btn-light" onClick={() => filterProducts("jewelery")} />
+          <input type="button" value="electronics" className="btn btn-light" onClick={() => filterProducts("electronics")} />
+          <input type="button" value="women's clothing" className="btn btn-light" onClick={() => filterProducts("women's clothing")} />
+        </div>
         <Row>
           {productData.map((item, index) => {
             return (

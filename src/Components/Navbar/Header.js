@@ -4,7 +4,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { BiSun, BiMoon, BiCart } from "react-icons/bi";
 
-import { ThemeContext } from "../GlobalCombonents/ThemeProvider";
+import { ThemeContext } from "../../GlobalCombonents/ThemeProvider";
 import { useContext, useEffect, useState } from "react";
 import { useCart } from "react-use-cart";
 import { NavDropdown } from "react-bootstrap";

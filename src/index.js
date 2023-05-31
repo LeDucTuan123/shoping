@@ -6,9 +6,14 @@ import reportWebVitals from "./reportWebVitals";
 import { ThemeProvider } from "./GlobalCombonents/ThemeProvider";
 import { CartProvider } from "react-use-cart";
 import { AuthProvider } from "./GlobalCombonents/AuthProvider";
+import { Provider } from "react-redux";
+import store from "./Components/redux/store";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
+    {/* <Provider store={store} > */}
+      
     <ThemeProvider>
       <AuthProvider>
         <CartProvider>
@@ -16,6 +21,7 @@ root.render(
         </CartProvider>
       </AuthProvider>
     </ThemeProvider>
+    {/* </Provider> */}
   </React.StrictMode>
 );
 

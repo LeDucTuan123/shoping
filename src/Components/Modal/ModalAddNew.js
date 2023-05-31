@@ -24,7 +24,7 @@ const ModalAddNew = (props) => {
   };
   console.log("re-render");
   const handleSave = async () => {
-    let id = Math.floor(Math.random() * 100);
+    let id = Math.floor(Math.random() * 1000);
     FetchCreateData(id, title, price, description, image, category);
     onHandleAddProduct({
       id: id,

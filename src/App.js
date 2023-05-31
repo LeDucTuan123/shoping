@@ -3,10 +3,10 @@ import "./App.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useThemeHook } from "./GlobalCombonents/ThemeProvider";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Header from "./Components/Header";
+import Header from "./Components/Navbar/Header";
 import Home from "./Pages/Home";
 import Cart from "./Pages/Cart";
-import Login from "./Pages/User/Login";
+import Login from "./Pages/Login/Login";
 import DetailComponent from "./Components/DetailComponent/DetailComponent";
 import NotFound404 from "./Pages/NotFound404";
 

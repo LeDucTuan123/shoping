@@ -24,6 +24,7 @@ const ProductCard = (props) => {
         <div
           style={{
             backgroundColor: "white",
+            width:'100%',
             height: "15rem",
             overflow: "hidden",
             display: "flex",
@@ -32,11 +33,11 @@ const ProductCard = (props) => {
             marginBottom: "inherit",
           }}
         >
-          <div style={{ width: "9rem" }}>
             <Link to={`/products/${item.id}`}>
-              <Card.Img variant="top" src={item.image} className=" img-fluid" />
-            </Link>
+          <div >
+              <Card.Img variant="top" src={item.image} style={{ width: "110px", height:'190px', objectFit:'contain'}} className=" img-fluid" />
           </div>
+            </Link>
         </div>
         <Card.Body
           style={{
@@ -52,6 +53,7 @@ const ProductCard = (props) => {
           <Card.Title>
             <span> Price: ₫{item.price}</span>{" "}
           </Card.Title>
+          
 
           <Button
             onClick={() => addToCart()}
